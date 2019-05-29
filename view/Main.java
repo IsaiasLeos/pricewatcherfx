@@ -1,3 +1,5 @@
+package view;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -8,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import utils.Alert;
+import utils.Confirm;
 
 public class Main extends Application implements EventHandler<ActionEvent> {
 
@@ -21,13 +25,13 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         Label label1 = new Label("Button");
 
         //Button 1
-        Button button1 = new Button("Alert");
-        button1.setOnAction(e -> Alert.display("Alert Window", "Alert"));
+        Button button1 = new Button("utils.Alert");
+        button1.setOnAction(e -> Alert.display("utils.Alert Window", "utils.Alert"));
 
 
         //Button 2
         Button button2 = new Button("Confirmation");
-        button2.setOnAction(e -> Confirm.display("Confirmation Window", "Confirm"));
+        button2.setOnAction(e -> Confirm.display("Confirmation Window", "utils.Confirm"));
 
         //Layout 1 - children laid out in vertical column
         VBox layout1 = new VBox(5);
