@@ -30,9 +30,8 @@ public class PriceFinder extends WebScrape {
      * @return random double with the range of the given value
      */
     public double getPrice(Double medValue) {
-        Random rand = new Random();
         double minValue = medValue - (medValue / 10);
         double maxValue = medValue + (medValue / 10);
-        return (new BigDecimal(minValue + (maxValue - minValue) * rand.nextDouble()).setScale(2, RoundingMode.CEILING).doubleValue());
+        return (new BigDecimal(minValue + (maxValue - minValue) * new Random().nextDouble()).setScale(2, RoundingMode.CEILING).doubleValue());
     }
 }

@@ -4,14 +4,11 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import utils.Alert;
-import utils.Confirm;
 
 public class Main extends Application implements EventHandler<ActionEvent> {
 
@@ -22,22 +19,10 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     @Override
     public void start(Stage primaryStage) {
 
-        Label label1 = new Label("Button");
 
-        //Button 1
-        Button button1 = new Button("utils.Alert");
-        button1.setOnAction(e -> Alert.display("utils.Alert Window", "utils.Alert"));
+        VBox vBox = new VBox(createMenuBar());
 
-
-        //Button 2
-        Button button2 = new Button("Confirmation");
-        button2.setOnAction(e -> Confirm.display("Confirmation Window", "utils.Confirm"));
-
-        //Layout 1 - children laid out in vertical column
-        VBox layout1 = new VBox(5);
-        layout1.getChildren().addAll(label1, button1, button2);
-        layout1.setAlignment(Pos.CENTER);
-        Scene scene1 = new Scene(layout1, 200, 200);
+        Scene scene1 = new Scene(vBox, 200, 200);
 
 
         primaryStage.setOnCloseRequest(event -> {
@@ -50,14 +35,89 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     }
 
     private void onClose() {
-        boolean answer = Confirm.display("Exit", "Are you sure you want to exit?");
-        if (answer) {
-            Platform.exit();
-        }
+        Platform.exit();
     }
 
     @Override
     public void handle(ActionEvent event) {
 
+    }
+
+    private MenuBar createMenuBar() {
+        MenuBar menuBar = new MenuBar();
+        Menu app = new Menu("App");
+        Menu item = new Menu("Item");
+        Menu sort = new Menu("Sort");
+
+        MenuItem about = new MenuItem("About");
+        about.setGraphic(new ImageView(String
+                .valueOf(getClass()
+                        .getClassLoader()
+                        .getResource("resources/about.png"))));
+        MenuItem exit = new MenuItem("Exit");
+        exit.setGraphic(new ImageView(String
+                .valueOf(getClass()
+                        .getClassLoader()
+                        .getResource("resources/exit.png"))));
+        app.getItems().addAll(about, exit);
+
+        MenuItem price = new MenuItem("Check Prices");
+        price.setGraphic(new ImageView(String
+                .valueOf(getClass()
+                        .getClassLoader()
+                        .getResource("resources/checkmark.png"))));
+        MenuItem add = new MenuItem("Exit");
+        add.setGraphic(new ImageView(String
+                .valueOf(getClass()
+                        .getClassLoader()
+                        .getResource("resources/plus.png"))));
+        MenuItem search = new MenuItem("Check Prices");
+        search.setGraphic(new ImageView(String
+                .valueOf(getClass()
+                        .getClassLoader()
+                        .getResource("resources/search.png"))));
+        MenuItem first = new MenuItem("Exit");
+        first.setGraphic(new ImageView(String
+                .valueOf(getClass()
+                        .getClassLoader()
+                        .getResource("resources/up.png"))));
+        MenuItem last = new MenuItem("Exit");
+        last.setGraphic(new ImageView(String
+                .valueOf(getClass()
+                        .getClassLoader()
+                        .getResource("resources/down.png"))));
+        item.getItems().addAll(price, add, new SeparatorMenuItem(), search, first, last);
+
+        RadioMenuItem sortOld = new RadioMenuItem("Oldest");
+        RadioMenuItem sortNew = new RadioMenuItem("Newest");
+        RadioMenuItem ascending = new RadioMenuItem("Ascending Order");
+        RadioMenuItem descending = new RadioMenuItem("Descending Order");
+        RadioMenuItem lowPrice = new RadioMenuItem("Lowest Price ($)");
+        RadioMenuItem highPrice = new RadioMenuItem("Highest Price ($)");
+        RadioMenuItem lowChange = new RadioMenuItem("Lowest Change (%)");
+        RadioMenuItem highChange = new RadioMenuItem("Highest Change (%)");
+        ToggleGroup toggleGroup = new ToggleGroup();
+        toggleGroup.getToggles().addAll(
+                sortOld,
+                sortNew,
+                ascending,
+                descending,
+                lowPrice,
+                highPrice,
+                lowChange,
+                highChange);
+        sort.getItems().addAll(
+                sortOld,
+                sortNew,
+                new SeparatorMenuItem(),
+                ascending,
+                descending,
+                new SeparatorMenuItem(),
+                lowPrice,
+                highPrice,
+                lowChange,
+                highChange);
+        menuBar.getMenus().addAll(app, item, sort);
+        return menuBar;
     }
 }
