@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -35,10 +36,20 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         Scene scene1 = new Scene(layout1, 200, 200);
 
 
-        //Display Scene 1
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            onClose();
+        });
         primaryStage.setScene(scene1);
         primaryStage.setTitle("Javafx");
         primaryStage.show();
+    }
+
+    private void onClose() {
+        boolean answer = Confirm.display("Exit", "Are you sure you want to exit?");
+        if (answer) {
+            Platform.exit();
+        }
     }
 
     @Override
